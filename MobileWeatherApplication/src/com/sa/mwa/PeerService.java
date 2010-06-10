@@ -12,7 +12,7 @@ import android.os.RemoteException;
 public class PeerService extends Service{
 
 	final RemoteCallbackList<INotifyTemperatureChanged> mCallbacks = new RemoteCallbackList<INotifyTemperatureChanged>();
-	private Random random;
+	private  Random random;
 
 	//PeerService introduces its own interface using this method.
 	@Override
@@ -63,7 +63,7 @@ public class PeerService extends Service{
 	}
 	
 	//implementation of the interface that this service exposes
-	private final IPeerRemoteService.Stub binder = new IPeerRemoteService.Stub() {
+	public final IPeerRemoteService.Stub binder = new IPeerRemoteService.Stub() {
 		@Override
 		public void registerCallBack(INotifyTemperatureChanged ntc)
 				throws RemoteException {
@@ -86,6 +86,11 @@ public class PeerService extends Service{
 		@Override
 		public double retrieveTemparature() throws RemoteException {
 			return random.nextInt(40);
+		}
+
+		@Override
+		public int getRegisteredServicesCount() throws RemoteException {
+			return mCallbacks.beginBroadcast();
 		}
 	};
 	

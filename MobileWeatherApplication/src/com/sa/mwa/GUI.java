@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -19,7 +20,6 @@ import android.widget.TextView;
 
 public class GUI extends Activity {
 
-	IPeerRemoteService remoteService;
 	TextView mCallBackText;
 	Button button,button2,button3;
 	PeerServiceConnector connection;
@@ -31,12 +31,6 @@ public class GUI extends Activity {
 		
 		mCallBackText = (TextView)findViewById(R.id.widget31);
 		
-		//starting service
-		//startService(new Intent("com.sa.mwa.PEER_SERVICE"));
-		
-		//updating ui
-		//mCallBackText.setText("Service Started");
-		
 		final GuiNotifyTemperatureChanged guiListener = new GuiNotifyTemperatureChanged(handler);
 		
 		button = (Button)findViewById(R.id.service);		
@@ -47,7 +41,7 @@ public class GUI extends Activity {
 		@Override
 		public void onClick(View arg0) {
 			
-			startService(new Intent("com.sa.mwa.PEER_SERVICE"));
+			//startService(new Intent("com.sa.mwa.PEER_SERVICE"));
 			//binding listeners to service
 			
 			List<INotifyTemperatureChanged> listeners = new ArrayList<INotifyTemperatureChanged>();
@@ -55,8 +49,10 @@ public class GUI extends Activity {
 			
 			//create connection to service
 			connection = new PeerServiceConnector(listeners);
+			
 			bindService(new Intent(IPeerRemoteService.class.getName()),
                     connection, Context.BIND_AUTO_CREATE);
+			
 			
 			mCallBackText.setText("Binding.");
 		}});
@@ -65,14 +61,8 @@ public class GUI extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				try {
-					remoteService.unregisterCallBack(guiListener);
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
+								
 				unbindService(connection);
-				
-				stopService(new Intent("com.sa.mwa.PEER_SERVICE"));
 				button3.setText("HELLO");
 			}
 			
