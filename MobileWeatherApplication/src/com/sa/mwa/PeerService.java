@@ -11,8 +11,10 @@ import android.os.RemoteException;
 
 public class PeerService extends Service{
 
-	final RemoteCallbackList<INotifyTemperatureChanged> mCallbacks = new RemoteCallbackList<INotifyTemperatureChanged>();
+	private final RemoteCallbackList<INotifyTemperatureChanged> callBacks = new RemoteCallbackList<INotifyTemperatureChanged>();
 	private  Random random;
+	
+	public static final int TEMPERATURE_MESSAGE = 1;
 
 	//PeerService introduces its own interface using this method.
 	@Override
@@ -27,14 +29,14 @@ public class PeerService extends Service{
 		
 		@Override
 		public void handleMessage(android.os.Message msg) {
-			if (msg.what == 1)
+			if (msg.what == TEMPERATURE_MESSAGE)
 			{
-				final int n = mCallbacks.beginBroadcast();
+				final int n = callBacks.beginBroadcast();
 				for (int i = 0; i < n; i++)
 				{
 					try
 					{
-						mCallbacks.getBroadcastItem(i).temperatureChanged(binder.retrieveTemparature(), binder.retrieveHumidity());
+						callBacks.getBroadcastItem(i).temperatureChanged(binder.retrieveTemparature(), binder.retrieveHumidity());
 					}
 					catch (RemoteException re)
 					{
@@ -42,8 +44,8 @@ public class PeerService extends Service{
 					}
 				}
 				
-				mCallbacks.finishBroadcast();
-				sendMessageDelayed(obtainMessage(1), 100);
+				callBacks.finishBroadcast();
+				sendMessageDelayed(obtainMessage(TEMPERATURE_MESSAGE), 100);
 			}
 		};
 		
@@ -51,8 +53,10 @@ public class PeerService extends Service{
 	
 	@Override
 	public void onCreate() {
+		
 		//starting the message sending process
-		handler.sendEmptyMessage(1);
+		handler.sendEmptyMessage(TEMPERATURE_MESSAGE);
+		
 		random = new Random();
 	}
 	
@@ -68,14 +72,14 @@ public class PeerService extends Service{
 		public void registerCallBack(INotifyTemperatureChanged ntc)
 				throws RemoteException {
 			if (ntc != null)
-				mCallbacks.register(ntc);
+				callBacks.register(ntc);
 		}
 
 		@Override
 		public void unregisterCallBack(INotifyTemperatureChanged ntc)
 				throws RemoteException {
 			if (ntc != null)
-				mCallbacks.unregister(ntc);
+				callBacks.unregister(ntc);
 		}
 
 		@Override
@@ -86,12 +90,6 @@ public class PeerService extends Service{
 		@Override
 		public double retrieveTemparature() throws RemoteException {
 			return random.nextInt(40);
-		}
-
-		@Override
-		public int getRegisteredServicesCount() throws RemoteException {
-			//return mCallbacks.beginBroadcast();'
-			return 12;
 		}
 	};
 	

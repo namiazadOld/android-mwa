@@ -14,7 +14,7 @@ public class GuiNotifyTemperatureChanged extends INotifyTemperatureChanged.Stub
 	@Override
 	public void temperatureChanged(double value, double humidity)
 			throws RemoteException {
-		handler.sendMessage(handler.obtainMessage(1, new Temperature(value, humidity)));
+		handler.sendMessage(handler.obtainMessage(PeerService.TEMPERATURE_MESSAGE, new Temperature(value, humidity)));
 	}
 
 }
