@@ -16,11 +16,7 @@ public class PeerServiceConnector implements ServiceConnection {
 	{
 		this.registeredServices = registeredServices;
 	}
-	
-	public IPeerRemoteService getRemoteService() {
-		return remoteService;
-	}
-	
+
 	@Override
 	public void onServiceConnected(ComponentName name, IBinder service) {
 		remoteService = IPeerRemoteService.Stub.asInterface(service);

@@ -8,4 +8,5 @@ interface IPeerRemoteService
 	double retrieveHumidity();
 	void registerCallBack(INotifyTemperatureChanged ntc);
 	void unregisterCallBack(INotifyTemperatureChanged ntc);
+	int  getRegisteredServicesCount();
 }
