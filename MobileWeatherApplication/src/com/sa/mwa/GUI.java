@@ -4,17 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
+import android.os.Message;
 import android.os.RemoteException;
+import android.provider.CallLog.Calls;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -53,6 +50,8 @@ public class GUI extends Activity {
 			bindService(new Intent(IPeerRemoteService.class.getName()),
                     connection, Context.BIND_AUTO_CREATE);
 			
+
+			
 			
 			mCallBackText.setText("Binding.");
 		}});
@@ -62,6 +61,15 @@ public class GUI extends Activity {
 			@Override
 			public void onClick(View arg0) {
 								
+				
+				try {
+				int i = connection.remoteService.getRegisteredServicesCount();
+				i++;
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
 				unbindService(connection);
 				button3.setText("HELLO");
 			}
@@ -81,7 +89,11 @@ public class GUI extends Activity {
 		public void handleMessage(android.os.Message msg) 
 		{
 			if (msg.what == 1)
-				mCallBackText.setText("Received Message: " + msg.obj);
+			{
+				Temperature temperature = (Temperature) msg.obj;
+				mCallBackText.setText("Received Message: " + temperature.getValue());
+			}
+				
 		};
 	};
 }

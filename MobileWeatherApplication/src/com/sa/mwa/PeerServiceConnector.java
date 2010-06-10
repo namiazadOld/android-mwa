@@ -9,7 +9,7 @@ import android.os.RemoteException;
 public class PeerServiceConnector implements ServiceConnection {
 
 	
-	IPeerRemoteService remoteService;
+	public IPeerRemoteService remoteService;
 	List<INotifyTemperatureChanged> registeredServices;
 	
 	public PeerServiceConnector(List<INotifyTemperatureChanged> registeredServices)
