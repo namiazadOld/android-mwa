@@ -90,7 +90,8 @@ public class PeerService extends Service{
 
 		@Override
 		public int getRegisteredServicesCount() throws RemoteException {
-			return mCallbacks.beginBroadcast();
+			//return mCallbacks.beginBroadcast();'
+			return 12;
 		}
 	};
 	
