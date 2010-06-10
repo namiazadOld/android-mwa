@@ -1,12 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+<AbsoluteLayout
+android:id="@+id/widget0"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+<LinearLayout
+android:id="@+id/widget28"
+android:layout_width="300px"
+android:layout_height="300px"
+android:orientation="vertical"
+android:layout_x="9px"
+android:layout_y="7px"
+>
+<Button
+android:id="@+id/service"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="service"
+>
+</Button>
+<Button
+android:id="@+id/widget35"
+android:layout_width="114px"
+android:layout_height="wrap_content"
+android:text="stop service"
+>
+</Button>
+<Button
+android:id="@+id/callback"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="callback"
+>
+</Button>
+<TextView
+android:id="@+id/widget31"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="TextView"
+>
+</TextView>
 </LinearLayout>
+</AbsoluteLayout>
