@@ -63,7 +63,7 @@ public class PeerService extends Service{
 
 	@Override
 	public void onDestroy() {
-		handler.removeMessages(1);
+		handler.removeMessages(PeerService.TEMPERATURE_MESSAGE);
 	}
 	
 	//implementation of the interface that this service exposes
