@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class Main extends Activity {
@@ -18,6 +20,7 @@ public class Main extends Activity {
 	private PeerServiceConnector peerServiceConnection;
 	
 	TextView lbl_temperature;
+	Button btn_change;
 	
 	private void establishServiceConnection()
 	{
@@ -38,7 +41,20 @@ public class Main extends Activity {
 	private void uiElementInitializing()
 	{
 		lbl_temperature = (TextView) findViewById(R.id.lbl_temperature);
+		
+		btn_change = (Button) findViewById(R.id.btn_change);
+		btn_change.setOnClickListener(btn_change_onClick);
 	}
+	
+	private Button.OnClickListener btn_change_onClick = new Button.OnClickListener(){
+
+		@Override
+		public void onClick(View v) {
+			
+			
+		}
+		
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +66,6 @@ public class Main extends Activity {
 		
 		//ui element initialization
 		uiElementInitializing();
-	
 	}
 	
 	@Override
